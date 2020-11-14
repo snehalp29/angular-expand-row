@@ -1,10 +1,13 @@
-import { Component } from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+
 import {
   animate,
   state,
   style,
   transition,
-  trigger
+  trigger,
 } from "@angular/animations";
 
 import { Table, TableService } from "primeng/table";
@@ -19,8 +22,8 @@ import { Table, TableService } from "primeng/table";
   providers: [
     TableService,
     {
-      provide: Table
-    }
+      provide: Table,
+    },
   ],
   animations: [
     trigger("detailExpand", [
@@ -29,15 +32,18 @@ import { Table, TableService } from "primeng/table";
       transition(
         "expanded <=> collapsed",
         animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
-    ])
-  ]
+      ),
+    ]),
+  ],
 })
-export class TableExpandableRowsExample {
-  dataSource = ELEMENT_DATA;
+export class TableExpandableRowsExample implements AfterViewInit {
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  @ViewChild(MatSort) sort: MatSort;
   columnsToDisplay = ["rowEdit", "name", "weight", "symbol", "position"];
   expandedElement: PeriodicElement | null;
-
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
   rowClicked(row: PeriodicElement): void {
     console.log(row);
 
@@ -48,9 +54,12 @@ export class TableExpandableRowsExample {
     //  [class.example-expanded-row]="expandedElement === element"
     //   (click)="expandedElement = expandedElement === element ? null : element"
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   findPreviousRowEdited(): void {
-    const editedRow = this.dataSource.find(row => row.rowEdit == true);
+    const editedRow = this.dataSource.data.find((row) => row.rowEdit == true);
     if (!!editedRow) {
       editedRow.rowEdit = false;
     }
@@ -58,7 +67,6 @@ export class TableExpandableRowsExample {
     console.log(editedRow);
   }
 }
-
 
 export interface PeriodicElement {
   name: string;
@@ -70,14 +78,12 @@ export interface PeriodicElement {
   rowEdit: boolean;
 }
 
-
-const CO_MANAGER_DATA:string[] = [
-  'Manager 1',
-  'Manager 2',
-  'Manager 3',
-  'Manager 4',
-
-]
+const CO_MANAGER_DATA: string[] = [
+  "Manager 1",
+  "Manager 2",
+  "Manager 3",
+  "Manager 4",
+];
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {
@@ -88,7 +94,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
         atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 2,
@@ -99,7 +105,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
         group in the periodic table. Its boiling point is the lowest among all the elements.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 3,
@@ -110,7 +116,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         silvery-white alkali metal. Under standard conditions, it is the lightest metal and the
         lightest solid element.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 4,
@@ -121,7 +127,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         relatively rare element in the universe, usually occurring as a product of the spallation of
         larger atomic nuclei that have collided with cosmic rays.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 5,
@@ -132,7 +138,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
         low-abundance element in the Solar system and in the Earth's crust.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 6,
@@ -143,7 +149,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         and tetravalent—making four electrons available to form covalent chemical bonds. It belongs
         to group 14 of the periodic table.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 7,
@@ -153,7 +159,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Nitrogen is a chemical element with symbol N and atomic number 7. It was first
         discovered and isolated by Scottish physician Daniel Rutherford in 1772.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 8,
@@ -164,7 +170,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
          the chalcogen group on the periodic table, a highly reactive nonmetal, and an oxidizing
          agent that readily forms oxides with most elements as well as with other compounds.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 9,
@@ -175,7 +181,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lightest halogen and exists as a highly toxic pale yellow diatomic gas at standard
         conditions.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
+    rowEdit: false,
   },
   {
     position: 10,
@@ -186,8 +192,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         Neon is a colorless, odorless, inert monatomic gas under standard conditions, with about
         two-thirds the density of air.`,
     testhiddencol1: "testhiddencol1",
-    rowEdit: false
-  }
+    rowEdit: false,
+  },
 ];
 
 /**  Copyright 2020 Google LLC. All Rights Reserved.
