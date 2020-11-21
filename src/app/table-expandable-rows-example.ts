@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 
@@ -11,6 +11,8 @@ import {
 } from "@angular/animations";
 
 import { Table, TableService } from "primeng/table";
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ThrowStmt } from '@angular/compiler';
 
 /**
  * @title Table with expandable rows
@@ -36,19 +38,65 @@ import { Table, TableService } from "primeng/table";
     ]),
   ],
 })
-export class TableExpandableRowsExample implements AfterViewInit {
-  
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+export class TableExpandableRowsExample implements AfterViewInit, OnInit {
+
+
+  constructor(private fb: FormBuilder) {
+
+  }
+
+  formData: FormGroup = new FormGroup({});
+  formdataarray: FormArray = new FormArray([]);
+  dataSource = new MatTableDataSource([]);
+
   @ViewChild(MatSort) sort: MatSort;
   columnsToDisplay = ["rowEdit", "name", "weight", "symbol", "position", "investorName"];
   expandedElement: PeriodicElement | null;
+
+  ngOnInit() {
+    this.formData = this.fb.group({
+      rowEdit: [],
+      name: [],
+      weight: [],
+      symbol: [],
+      position: [],
+      investorName: []
+    })
+
+    
+
+    for(let i =0; i<ELEMENT_DATA.length;i++){
+      this.formdataarray.push(
+        this.fb.group({
+          rowEdit: ELEMENT_DATA[i].rowEdit,
+          name: ELEMENT_DATA[i].name,
+          weight: ELEMENT_DATA[i].weight,
+          symbol: ELEMENT_DATA[i].symbol,
+          position: ELEMENT_DATA[i].position,
+          investorName: ELEMENT_DATA[i].investorName
+        })
+      )
+
+    }
+
+
+//  this.dataSource =this.formdataarray.controls;
+   
+  
+
+
+  }
+
   ngAfterViewInit() {
+
+    console.log("$$$$$$$", this.sort)
+
     this.dataSource.sort = this.sort;
   }
   rowClicked(row: PeriodicElement): void {
     console.log(row);
 
-    this.findPreviousRowEdited();
+    // this.findPreviousRowEdited();
 
     row.rowEdit = true;
 
@@ -60,14 +108,14 @@ export class TableExpandableRowsExample implements AfterViewInit {
     console.log(filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  findPreviousRowEdited(): void {
-    const editedRow = this.dataSource.data.find((row) => row.rowEdit == true);
-    if (!!editedRow) {
-      editedRow.rowEdit = false;
-    }
+  // findPreviousRowEdited(): void {
+  //   const editedRow = this.dataSource.data.find((row) => row.rowEdit == true);
+  //   if (!!editedRow) {
+  //     editedRow.rowEdit = false;
+  //   }
 
-    console.log(editedRow);
-  }
+  //   console.log(editedRow);
+  // }
 }
 
 export interface PeriodicElement {
@@ -78,7 +126,7 @@ export interface PeriodicElement {
   description: string;
   testhiddencol1: string;
   rowEdit: boolean;
-  investorName:string;
+  investorName: string;
 }
 
 const CO_MANAGER_DATA: string[] = [

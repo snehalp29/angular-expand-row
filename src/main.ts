@@ -26,7 +26,7 @@ import { MatTableModule } from '@angular/material/table';
     MatNativeDateModule,
     ReactiveFormsModule,
     MatTableModule
-  ],
+    ],
   entryComponents: [TableExpandableRowsExample],
   declarations: [TableExpandableRowsExample],
   bootstrap: [TableExpandableRowsExample],
