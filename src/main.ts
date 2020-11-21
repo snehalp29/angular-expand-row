@@ -11,6 +11,7 @@ import {DemoMaterialModule} from './app/material-module';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 import {TableExpandableRowsExample} from './app/table-expandable-rows-example';
+import { MatTableModule } from '@angular/material/table';
 
 // Default MatFormField appearance to 'fill' as that is the new recommended approach and the
 // `legacy` and `standard` appearances are scheduled for deprecation in version 10.
@@ -24,6 +25,7 @@ import {TableExpandableRowsExample} from './app/table-expandable-rows-example';
     DemoMaterialModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatTableModule
   ],
   entryComponents: [TableExpandableRowsExample],
   declarations: [TableExpandableRowsExample],

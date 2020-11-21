@@ -37,9 +37,10 @@ import { Table, TableService } from "primeng/table";
   ],
 })
 export class TableExpandableRowsExample implements AfterViewInit {
+  
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatSort) sort: MatSort;
-  columnsToDisplay = ["rowEdit", "name", "weight", "symbol", "position"];
+  columnsToDisplay = ["rowEdit", "name", "weight", "symbol", "position", "investorName"];
   expandedElement: PeriodicElement | null;
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -56,6 +57,7 @@ export class TableExpandableRowsExample implements AfterViewInit {
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   findPreviousRowEdited(): void {
@@ -76,6 +78,7 @@ export interface PeriodicElement {
   description: string;
   testhiddencol1: string;
   rowEdit: boolean;
+  investorName:string;
 }
 
 const CO_MANAGER_DATA: string[] = [
@@ -95,6 +98,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "abc investor"
   },
   {
     position: 2,
@@ -106,6 +110,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         group in the periodic table. Its boiling point is the lowest among all the elements.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "abc investor"
+
   },
   {
     position: 3,
@@ -117,6 +123,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         lightest solid element.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "cde investor"
+
   },
   {
     position: 4,
@@ -128,6 +136,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         larger atomic nuclei that have collided with cosmic rays.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "fgh investor"
+
   },
   {
     position: 5,
@@ -139,6 +149,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         low-abundance element in the Solar system and in the Earth's crust.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "abc investor"
+
   },
   {
     position: 6,
@@ -150,6 +162,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         to group 14 of the periodic table.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "ijk investor"
+
   },
   {
     position: 7,
@@ -160,6 +174,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         discovered and isolated by Scottish physician Daniel Rutherford in 1772.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "lmn investor"
+
   },
   {
     position: 8,
@@ -171,6 +187,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
          agent that readily forms oxides with most elements as well as with other compounds.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "lm investor"
+
   },
   {
     position: 9,
@@ -182,6 +200,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         conditions.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "test investor"
+
   },
   {
     position: 10,
@@ -193,6 +213,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
         two-thirds the density of air.`,
     testhiddencol1: "testhiddencol1",
     rowEdit: false,
+    investorName: "xyz investor"
+
   },
 ];
 

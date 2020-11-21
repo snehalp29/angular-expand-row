@@ -50,3 +50,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+.element-row-hide{
+  min-height: 0;
+  height: 0;
+  visibility: hidden;
+}
