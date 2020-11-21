@@ -1,19 +1,21 @@
+<!-- {{formdataarray.value | json}} -->
+
 <mat-form-field>
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
 </mat-form-field>
 <table
   mat-table
-  [dataSource]="dataSource"
+  [dataSource]="formdataarray.controls"
   multiTemplateDataRows
   class="mat-elevation-z8" matSort
 >
-  <ng-container
+  <ng-container 
     matColumnDef="{{column}}"
     *ngFor="let column of columnsToDisplay"
   >
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column}}</th>
-    <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+    <td mat-cell *matCellDef="let element"> {{ element.value[column] }}  </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
